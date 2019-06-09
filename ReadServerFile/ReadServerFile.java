@@ -18,7 +18,7 @@ public class ReadServerFile extends JFrame {
         contentsArea.setEditable(false);
 
         // get Files specified by user
-        enterField.addActionListener( new ActionListner() {
+        enterField.addActionListener( new ActionListener() {
             public void actionPerformed( ActionEvent event) {
                 getFile(event.getActionCommand());
 
@@ -27,7 +27,7 @@ public class ReadServerFile extends JFrame {
 
         contentsArea.addHyperlinkListener( new HyperlinkListener() {
             // if user click on HyperLink go to specified page
-            public void HyperlinkUpdate( HyperlinkEvent event) {
+            public void hyperlinkUpdate(HyperlinkEvent event) {
                 if(event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     getFile(event.getURL().toString());
                 }
@@ -36,7 +36,7 @@ public class ReadServerFile extends JFrame {
         });
 
         container.add(enterField, BorderLayout.NORTH);
-        container.add(new ScrollPane(contentsArea), BorderLayout.CENTER);
+        container.add(new JScrollPane(contentsArea), BorderLayout.CENTER);
 
         setSize(500, 400);
         setVisible(true);
