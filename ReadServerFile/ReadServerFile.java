@@ -38,7 +38,8 @@ public class ReadServerFile extends JFrame {
         container.add(enterField, BorderLayout.NORTH);
         container.add(new JScrollPane(contentsArea), BorderLayout.CENTER);
 
-        setSize(500, 400);
+        setSize(1000, 600);
+        setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
         setVisible(true);
 
     }
