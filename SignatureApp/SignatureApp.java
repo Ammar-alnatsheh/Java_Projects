@@ -1,6 +1,9 @@
+import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class SignatureApp extends JFrame {
     private int pointCount = 0;
@@ -28,11 +31,18 @@ public class SignatureApp extends JFrame {
             }
         });
 
+        JButton save = new JButton(" Save ");
+        clear.addActionListener(new ActionListener(){  
+            public void actionPerformed(ActionEvent e){
+                save();
+            }
+        });
+
         JPanel bar = new JPanel();
-        bar.setLayout(new GridLayout(1,3,5,5));
+        bar.setLayout(new GridLayout(1,5,5,5));
         bar.add(new JLabel("Drag the mouse to draw"));
-        bar.add(new JLabel(""));
         bar.add(clear);
+        bar.add(save);
 
         getContentPane().add(bar, BorderLayout.SOUTH);
 
@@ -52,5 +62,45 @@ public class SignatureApp extends JFrame {
     public static void main(String args[]){
         SignatureApp app = new SignatureApp();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void save()
+    {
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int action = filechooser.showSaveDialog(null);
+
+        if ( action == JFileChooser.CANCEL_OPTION ) {
+            return;
+        }
+        
+        File file = filechooser.getSelectedFile();
+        if ( file == null || file.getName().equals("") ) {
+            JOptionPane.showMessageDialog(null,"Invalid file name","Invalid file name",JOptionPane.ERROR_MESSAGE);
+        
+        } else {
+            try
+            {
+                BufferedImage img = new BufferedImage(500, 200, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D graph = img.createGraphics();
+                graph.setBackground(Color.white);
+                graph.setColor(Color.white);
+                graph.fillRect(0, 0, 500, 200);
+                graph.setColor(Color.black);
+
+                for( int i = 0; i < points.length && points[i] != null; i++){
+                    graph.fillOval(points[i].x, points[i].y, 4, 4);
+                }
+                
+                graph.dispose();
+                //Export the result to a file
+                ImageIO.write(img, "PNG", file);
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null,"Error saving file","Error saving file",JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
