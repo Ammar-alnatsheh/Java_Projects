@@ -17,8 +17,8 @@ public class SignatureApp extends JFrame {
                 if( pointCount < points.length){
                     points[pointCount] = e.getPoint();
                     ++ pointCount;
-                    repaint();
                 }
+                repaint();
              }
         });
 
@@ -32,7 +32,7 @@ public class SignatureApp extends JFrame {
         });
 
         JButton save = new JButton(" Save ");
-        clear.addActionListener(new ActionListener(){  
+        save.addActionListener(new ActionListener(){  
             public void actionPerformed(ActionEvent e){
                 save();
             }
@@ -54,8 +54,8 @@ public class SignatureApp extends JFrame {
 
     public void paint(Graphics g) {
         super.paint(g);
-        for( int i = 0; i < points.length && points[i] != null; i++){
-            g.fillOval(points[i].x, points[i].y, 4, 4);
+        for( int i = 0; i < pointCount; i++){
+            g.fillOval(points[i].x, points[i].y, 5, 5);
         }
     }
 
